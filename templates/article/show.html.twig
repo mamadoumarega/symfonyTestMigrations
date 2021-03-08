@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% import 'extra/btn.html.twig' as btn %}
+{% import 'extra/badge.html.twig' as badge %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ article.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ article.description }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ article.price }}</td>
+            </tr>
+
+            <tr>
+                <th>State</th>
+                <td>{{ badge.article_state(article) }}</td>
+            </tr>
+            
+            {% if article.state != "created" %}
+                {% for place in workflow_transitions(article) %}
+
+                    {% if place.name == "publish" %}
+                        {% set color="success" %}
+                    {% elseif place.name == "unpublish" %}
+                        {% set color="warning" %}
+                    {% endif %}
+                    <tr>
+                        <th>Action</th>
+                        <td>
+                            {{ btn.simple(path('article_state_change', {'id':article.id, 'transition':place.name}), color, place.name) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+                
+        </tbody>
+    </table>
+{% endblock %}

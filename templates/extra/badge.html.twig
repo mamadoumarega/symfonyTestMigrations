@@ -1,0 +1,13 @@
+{% macro article_state(article) %}
+
+    {% set state = article.state|default(null) %}
+    {% set color = "secondary" %}
+
+    {% if state == "published" %}
+        {% set color = "success" %}
+    {% elseif state == "wait-review" %}
+        {% set color = "warning" %}
+    {% endif %}
+
+    <span class="badge badge-pill badge-{{- color -}}">{{ state }}</span>
+{% endmacro %}

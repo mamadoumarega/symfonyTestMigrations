@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% import 'extra/btn.html.twig' as btn %}
+
+{% block title %}Hello DefaultController!{% endblock %}
+
+{% block body %}
+    <div class="row">
+    {% for article in articles %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <span class="card-img-top d-block bg-secondary" style="width:100%; height:225px"></span>
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.name }}</h5>
+                    <p class="card-text">{{ article.description|slice(0, 120) }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            {{ btn.simple(path('article_show', {'id': article.id}), "sm btn-outline-info", "View", "ROLE_READ_ARTICLE", article) }}
+                            {{ btn.simple(path('article_edit', {'id': article.id}), "sm btn-outline-success", "Edit", "ROLE_UPDATE_ARTICLE", article) }}
+                        </div>
+                        <small class="text-muted">{{ article.price }} €</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="alert alert-danger">Article not found</p>
+    {% endfor %}
+    </div>
+{% endblock %}

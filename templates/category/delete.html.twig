@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Delete Category{% endblock %}
+
+{% block body %}
+    <h1>Delete Category</h1>
+    <div class="alert alert-danger">Confirm delete category : '{{ category.name }}' ? </div>
+    <form method="post" action="{{ path('category_delete', {'id': category.id}) }}">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+        <div class="btn-group btn-group-sm" role="group">
+            <a class="btn btn-secondary" href="{{ path('category_index') }}">Cancel</a>
+            <button class="btn btn-danger">Yes</button>
+        </div>
+    </form>
+{% endblock %}
+
+
+

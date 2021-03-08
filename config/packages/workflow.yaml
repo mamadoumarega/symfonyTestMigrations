@@ -1,0 +1,36 @@
+framework:
+    workflows: 
+        validate_article:
+            type: "state_machine"
+            audit_trail:
+                enabled: true
+            
+            marking_store:
+                type: "method"
+                property: "state"
+
+            supports:
+                - App\Entity\Article
+
+            places:
+                - created
+                - wait-review
+                - published
+
+            initial_marking: created
+
+            transitions:
+                submit:
+                    guard: "is_fully_authenticated() and is_granted('ROLE_CREATE_ARTICLE')"
+                    from: created
+                    to: wait-review
+
+                publish:
+                    guard: "is_fully_authenticated() and is_granted('ROLE_ADMIN')"
+                    from: wait-review
+                    to: published
+
+                unpublish:
+                    guard: "is_fully_authenticated() and is_granted('ROLE_ADMIN')"
+                    from: published
+                    to: wait-review

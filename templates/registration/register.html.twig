@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <h1>Register</h1>
+
+    {{ form_start(registrationForm, {'attr':{'novalidate':'novalidate'}}) }}
+        {{ form_row(registrationForm.first_name) }}
+        {{ form_row(registrationForm.last_name) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+
+        <div class="btn-group mt-2" role="group">
+            <button class="btn btn-lg btn-primary" type="submit">Register</button>
+            <a class="btn btn-lg btn-secondary" href="{{ path('app_login') }}">Sign in</a>
+        </div>
+    {{ form_end(registrationForm) }}
+{% endblock %}

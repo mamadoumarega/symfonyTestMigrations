@@ -1,0 +1,20 @@
+{% import 'extra/btn.html.twig' as btn %}
+
+{{ form_start(form, {'attr':{'novalidate':'novalidate'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    
+    {% if article.state != "created" %}
+        {% for place in workflow_transitions(article) %}
+
+            {% if place.name == "publish" %}
+                {% set color="success" %}
+            {% elseif place.name == "unpublish" %}
+                {% set color="warning" %}
+            {% endif %}
+
+            {{ btn.simple(path('article_state_change', {'id':article.id, 'transition':place.name}), color, place.name) }}
+        {% endfor %}
+    {% endif %}
+
+{{ form_end(form) }}
