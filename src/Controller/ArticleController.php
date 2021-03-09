@@ -19,6 +19,11 @@ use Symfony\Component\Workflow\Registry;
 class ArticleController extends AbstractController
 {
 
+    /**
+     * @var Registry
+     */
+    private $workflowRegistry;
+
     public function __construct(Registry $workflowRegistry)
     {
         $this->workflowRegistry = $workflowRegistry;
