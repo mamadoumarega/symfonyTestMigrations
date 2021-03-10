@@ -67,6 +67,11 @@ class User implements UserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $gender;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -213,6 +218,18 @@ class User implements UserInterface
                 $article->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?string $gender): self
+    {
+        $this->gender = $gender;
 
         return $this;
     }
